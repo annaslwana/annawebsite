@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Anna's Resume</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <style>
+   html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Quicksand', sans-serif;
+  background-color: #ffe6f2;
+  overflow: hidden;
+}
+
+#resume {
+  overflow: hidden; /* keep other pages like music player in place */
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+
+    .page {
+      height: 100vh;
+      width: 100vw;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      position: absolute;
+      top: 0; left: 0;
+    }
+
+    .active {
+      display: flex;
+    }
+
+    #landing {
+      background: linear-gradient(to bottom, #ffe6f2, #ffcce0);
+    }
+
+    .intro-img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .typing {
+      font-size: 1.5em;
+      color: #d63384;
+      margin-top: 10px;
+      height: 30px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #d63384;
+      animation: typing 3s steps(22), blink 0.8s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 220px; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    #clock {
+      font-size: 1.8em;
+      color: #4b2e2e;
+      margin: 15px 0;
+    }
+
+    .start-btn {
+      padding: 15px 35px;
+      background: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.5em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .start-btn:hover {
+      transform: scale(1.05);
+      background: #ff1493;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #ff69b4;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-weight: bold;
+      font-size: 1.8em;
+      z-index: 999;
+    }
+
+    main {
+      margin-top: 60px;
+      height: calc(100% - 60px);
+      position: relative;
+    }
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+ .section {
+  height: 100vh;
+  width: 100vw;
+  overflow-y: auto;
+  display: none;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: #fff0f5;
+  box-sizing: border-box;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+  padding: 100px 20px 120px;
+  text-align: center;
+  position: relative; /* ❗ CHANGED from absolute to relative */
+  top: 0;
+  left: 0;
+}
+
+.section.active {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.flex-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* or center if needed */
+  text-align: center;
+  width: 100%;
+  max-width: 900px;
+}
+
+
+
+    .section-img {
+      width: 180px;
+      height: 180px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-text {
+      font-size: 1.1em;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .flex-section {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+      }
+
+      .section-text {
+        padding-left: 30px;
+        text-align: left;
+      }
+
+      .section-img {
+        width: 160px;
+        height: 160px;
+      }
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+      width: 100%;
+    }
+
+    .gallery-item {
+      text-align: center;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .caption {
+      font-size: 1.0em;
+      color: #d63384;
+      margin-top: 6px;
+    }
+ 
+
+
+    .nav-buttons {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .nav-buttons button {
+      background-color: #ff69b4;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      margin-left: 10px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .nav-buttons button:hover {
+      background-color: #ff1493;
+    }
+
+    #homeBtn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background: #ffffff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+#resumeBtn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background: #ffffff;
+  color: #ff69b4;
+  border: 2px solid #ff69b4;
+  border-radius: 20px;
+  padding: 8px 15px;
+  font-weight: bold;
+  z-index: 1001;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .spin {
+      animation: spin 4s linear infinite;
+    }
+
+.videoBox {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: #f7cbe0;
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  width: 200px;
+  z-index: 999;
+  display: none;
+}
+
+.section-video {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+body.dark-theme {
+  background-color: #1a1a1a;
+  color: #f2f2f2;
+}
+
+body.dark-theme header {
+  background: #333;
+  color: #f2f2f2;
+}
+
+body.dark-theme .card {
+  background: #2b2b2b;
+  color: #f2f2f2;
+}
+
+body.dark-theme .caption {
+  color: #ff99cc;
+}
+
+body.dark-theme #musicCard {
+  background-color: #333 !important;
+  color: #f2f2f2 !important;
+}
+
+body.dark-theme #albumArt {
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2) !important;
+}
+
+body.dark-theme .videoBox {
+  background-color: #333;
+}
+
+body.dark-theme .section-video {
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+
+#themeBtn {
+  position: fixed;
+  top: 15px;
+  left: 65px; /* next to home button */
+  background: #ffffff;
+  color: #ff69b4;
+  border: 2px solid #ff69b4;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+
+  </style>
+</head>
+<body>
+
+
+
+<!-- 🌸 Landing Page -->
+<div id="landing" class="page active">
+  <img src="pink heart.webp" class="intro-img" alt="Anna Intro" />
+  <div class="typing">Loading Anna’s Resume...</div>
+  <div id="clock">00:00:00</div>
+
+  <input type="text" id="nameInput" placeholder="Enter your name 💖" style="margin: 15px 0; padding: 10px; border-radius: 10px; border: 2px solid #ff69b4; font-size: 1em;" />
+
+  <button class="start-btn" onclick="enterResume()">Start ✨</button>
+</div>
+<!-- 🌼 Resume Page -->
+<div id="resume" class="page">
+  <header>Anna's Resume</header>
+  <button id="homeBtn" onclick="goHome()">🏠</button>
+  <button id="themeBtn">🌓</button>
+
+</button>
+
+  <main>
+
+<!-- ✅ About Me Section -->
+<div class="section active">
+  <div class="card">
+    <div class="flex-section">
+            <div class="section-text">
+        <h2>🌸 About Me 🌸</h2>
+        <p id="greeting" style="font-size: 1.1em; color: #d63384; font-weight: bold;">Welcome!</p>
+        <p>Hi, I’m Anna Salwana from KCDIM1105A, and I'm currently diving deep into the world of Information Management as a passionate and curious student. ✨
+I’m not just here to study—I’m here to create, connect, and make an impact. I love blending tech with creativity, whether I’m building a website like this one, designing infographics, or organizing data in a way that actually makes sense (and looks good doing it). 🤓💻🎨
+This resume is more than just a list—it's a snapshot of who I am, what I love, and where I'm heading. Thanks for stopping by 💗</p>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="anna 2.jpg"><p class="caption">Fav outfit 💕</p></div>
+      <div class="gallery-item"><img src="study.jpg"><p class="caption">Study setup 📚</p></div>
+      <div class="gallery-item"><img src="cafe.jpg"><p class="caption">Cafe day 🧋</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 💻 Skills Section -->
+<div class="section" id="skills">
+  <div class="card">
+    <div class="flex-section">
+        <div class="section-text">
+        <h2>🛠️ Skills 🛠️</h2>
+        <p>I’m always up for learning new things and getting hands-on with creative or techy tasks. Whether it’s designing, editing, or fixing something up on a computer—I love figuring things out and making them look (and work) better. 💻✨.</p>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="canva.png"><p class="caption">Canva🎨. I use Canva for everything: infographics, posters, slides… you name it. I know how to make visuals that pop and communicate clearly.</p></div>
+      <div class="gallery-item"><img src="it.jpg"><p class="caption">PC Troubleshooting & IT Stuff 🖥️. Thanks to my internship at Zen Software, I’ve gained real-world experience with hardware and software support, problem-solving, and helping others with their tech issues.</p></div>
+      <div class="gallery-item"><img src="capcut.jpg"><p class="caption">Video Editing 🎬. I enjoy putting together clean, smooth edits for class projects or creative content—adding transitions, trimming clips, syncing audio, and making sure it all flows.</p></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 🧋 Experience Section -->
+<div class="section" id="experience">
+  <div class="card">
+    <div class="flex-section">
+            <div class="section-text">
+        <h2>💼 Experience 💼</h2>
+      <p>Since starting university, I’ve always been eager to explore new opportunities and gain hands-on experience wherever I can. I believe learning doesn’t just happen in the classroom—so I’ve been actively stepping into different roles to grow both personally and professionally. 🌱</p>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="intern.jpg"><p class="caption">Intern @ Zen Software as an IT Support Assistant, where I picked up technical problem-solving skills and got a real taste of working in the software industry. 🖥️🔧</p></div>
+      <div class="gallery-item"><img src="beutea.jpg"><p class="caption">Barista @ Beutea (Part-Time) during semester breaks — because nothing teaches multitasking, customer service, and hustle like working behind the counter. ☕💪
+
+</p></div>
+      <div class="gallery-item"><img src="group.jpg"><p class="caption">Group Projects @ University — I’ve collaborated on various academic projects that sharpened my research, teamwork, and time management skills. 📚🤝</p></div>
+      <div class="gallery-item"><img src="design.jpg"><p class="caption">Design Leader in my class projects — I often take the lead in planning, designing, and giving our work that extra creative touch. 🎨✨</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 🎓 Education Section -->
+<div class="section" id="education">
+  <div class="card">
+    <div class="flex-section">
+        <div class="section-text">
+        <h2>🎓 Education 🎓</h2>
+        <p>After finishing high school, I knew I wanted to keep learning and growing—so I took the next step by enrolling in Pre-Diploma studies, which gave me a strong foundation and helped me discover my passion for Information Management. 🌟 Now, I’m continuing that journey as a Diploma student in Information Management at UiTM, gaining deeper knowledge in data, records, archives, and the digital tools that shape how we manage information in today’s world. 🗂️💡Every semester teaches me more than just what’s in the syllabus—it’s about problem-solving, teamwork, and becoming the kind of person who’s ready for the future. And I’m loving every step of it. 💫</p>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="anna 1.jpg"><p class="caption">Diploma in Information Management @ UiTM Kedah (2023-Present)</p></div>
+      <div class="gallery-item"><img src="pra diploma.jpg"><p class="caption">Pra Diploma @ UiTM Permatang Pauh (2022-2023)</p></div>
+      <div class="gallery-item"><img src="smk.jpg"><p class="caption">SMK Dato' Kailan (2017-2022) </p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 💌 Contact Section -->
+<div class="section" id="contact">
+  <div class="card">
+    <div class="flex-section">
+        <div class="section-text">
+        <h2>💌 Contact 💌</h2>
+        <p>Wanna reach out, collab on something cool, or just say hi? I’m always open to chatting—whether it’s for a project, internship, or new opportunity! 😊</p>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="email.jpg"><p class="caption">📧 Email: annasalwana7981@gmail.com</p></div>
+      <div class="gallery-item"><img src="ig.jpg"><p class="caption">📸 Instagram: @annslwna – where I share bits of life, vibes, and the occasional study grind</p></div>
+      <div class="gallery-item"><img src="location.jpg"><p class="caption">📍 Location: Bertam, Penang 🇲🇾 🌇</p></div>
+    </div>
+  </div>
+</div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+      <button onclick="changeSection(-1)">← Prev</button>
+      <button onclick="changeSection(1)">Next →</button>
+    </div>
+
+    <!-- Music Player -->
+    <div id="musicCard" style="
+      position: fixed;
+      bottom: 80px;
+      left: 20px;
+      background: #f7cbe0;
+      padding: 15px;
+      border-radius: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      width: 200px;
+      text-align: center;
+      z-index: 999;
+      font-size: 0.9em;
+    ">
+      <img id="albumArt" src="ariana grande.jpg_large" alt="Album Art" style="
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        margin-bottom: 10px;
+      ">
+      <p style="margin: 0; font-weight: bold; color: #d63384;">Now Playing</p>
+      <p style="margin: 5px 0;">🎵 <strong>Ariana Grande - intro (end of the world)</strong></p>
+      <audio id="bgMusic" src="Ariana Grande - intro (end of the world) extended version.mp3" loop></audio>
+      <button id="musicButton">▶️</button>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" style="width: 100%;">
+    </div>
+
+<!-- 🎥 Floating Section Videos -->
+
+<div class="videoBox" id="video-skills">
+  <video src="skills.mp4" autoplay muted loop class="section-video"></video>
+</div>
+
+<div class="videoBox" id="video-experience">
+  <video src="work.mp4" autoplay muted loop class="section-video"></video>
+</div>
+
+<a id="resumeBtn" href="Resume-Anna.pdf" target="_blank">📄 Resume</a>
+
+
+
+  </main>
+</div>
+
+<!-- Scripts -->
+<script>
+  // Clock
+  function updateClock() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString();
+    document.getElementById('clock').textContent = timeString;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // Section logic with video visibility
+const sections = document.querySelectorAll(".section");
+let currentIndex = 0;
+
+function changeSection(direction) {
+  // Hide current section
+  sections[currentIndex].classList.remove("active");
+
+  // Hide all video boxes
+  document.querySelectorAll(".videoBox").forEach(v => v.style.display = "none");
+
+  // Move to next or previous section
+  currentIndex = (currentIndex + direction + sections.length) % sections.length;
+
+  // Show new section
+  sections[currentIndex].classList.add("active");
+
+  // Show matching video box if exists
+  const id = sections[currentIndex].id;
+  const currentVideo = document.getElementById("video-" + id);
+  if (currentVideo) currentVideo.style.display = "block";
+}
+
+
+  function enterResume() {
+  const name = document.getElementById("nameInput").value.trim();
+  const greetingElement = document.getElementById("greeting");
+
+  document.getElementById("landing").classList.remove("active");
+  document.getElementById("resume").classList.add("active");
+
+  // Set greeting
+  let timeGreeting = "";
+  const hour = new Date().getHours();
+  if (hour < 12) {
+    timeGreeting = "Good morning";
+  } else if (hour < 18) {
+    timeGreeting = "Good afternoon";
+  } else {
+    timeGreeting = "Good evening";
+  }
+
+  if (name) {
+    greetingElement.textContent = `${timeGreeting}, ${name}!`;
+  } else {
+    greetingElement.textContent = `${timeGreeting}!`;
+  }
+}
+
+
+  function goHome() {
+    document.getElementById("resume").classList.remove("active");
+    document.getElementById("landing").classList.add("active");
+    currentIndex = 0;
+    sections.forEach((sec, i) => {
+      sec.classList.remove("active");
+      if (i === 0) sec.classList.add("active");
+    });
+
+  function openResume() {
+    window.location.href = "Resume-Anna.pdf";
+  }
+
+
+  }
+
+  // Music
+  const audio = document.getElementById("bgMusic");
+  const btn = document.getElementById("musicButton");
+  const volume = document.getElementById("volumeSlider");
+  const album = document.getElementById("albumArt");
+  let isPlaying = false;
+
+  btn.addEventListener("click", () => {
+    if (isPlaying) {
+      audio.pause();
+      btn.textContent = "▶️";
+      album.classList.remove("spin");
+    } else {
+      audio.play();
+      btn.textContent = "⏸️";
+      album.classList.add("spin");
+    }
+    isPlaying = !isPlaying;
+  });
+
+  volume.addEventListener("input", () => {
+    audio.volume = volume.value;
+  });
+
+  window.addEventListener("click", () => {
+    if (!isPlaying) {
+      audio.play();
+      btn.textContent = "⏸️";
+      album.classList.add("spin");
+      isPlaying = true;
+    }
+  }, { once: true });
+
+document.getElementById("themeBtn").addEventListener("click", () => {
+  document.body.classList.toggle("dark-theme");
+});
+
+function showGreeting() {
+  const greetingElement = document.getElementById("greeting");
+  if (!greetingElement) return; // just in case it's missing
+
+  const now = new Date();
+  const hour = now.getHours();
+  let greeting;
+
+  if (hour < 12) {
+    greeting = "Good morning! ☀️";
+  } else if (hour < 18) {
+    greeting = "Good afternoon! 🌞";
+  } else {
+    greeting = "Good evening! 🌙";
+  }
+
+  greetingElement.textContent = greeting;
+}
+
+// Call this once when page loads
+showGreeting();
+
+
+</script>
+
+
+
+</body>
+</html>
